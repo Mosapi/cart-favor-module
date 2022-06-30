@@ -1,0 +1,1 @@
+# cart-favor-module
