@@ -1,0 +1,74 @@
+body{
+margin:0;
+padding:0;
+direction:ltr;
+font-family:"Interstate", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Garuda, Verdana, Tahoma, sans-serif;
+font-weight:100;
+text-transform:uppercase;
+border:none;
+font-size:12px;
+line-height:24px;
+overflow-wrap:break-word;
+height:100%;
+color:#4d4d4d;
+min-height:100%;
+box-shadow:0 0 0 #000;
+background-color:#f5f5f5;
+}
+a{color:#a411e1;text-decoration:none;cursor:pointer;text-shadow:0 0 1px #fff;}
+div, a, form, textarea, input, button, img, p, table{outline:none;/*margin:0px;*/}
+
+#pages_bottom{max-width:1240px;width:100%;position:relative;margin:0 auto;font-size:11px;}
+#pages_bottom div{margin:15px;max-width:500px;color:#585858;}
+#header{
+padding:0;
+max-width:1240px;
+width:100%;
+margin:0 auto;
+box-shadow:0 0 3px #626262;
+position:relative;
+font-size:11px;
+line-height:18px;
+border-radius:6px;
+}
+#header2{
+padding:0;
+max-width:1240px;
+width:100%;
+margin:0 auto;
+box-shadow:none;
+position:relative;
+font-size:11px;
+line-height:18px;
+}
+
+
+.mess{color:#ececec;text-align:center;width:100%;height:100px;clear:both;overflow:hidden;}
+.rih{float:right;margin:10px 0px;}
+.tt_cell::after{content:"\20BD";}
+._plat{width:160px;margin:auto 20px;font-size:38px;}
+._t{min-height:360px;background-color:#ededed;}
+.lef{float:left;font-size:2.1em;margin:30px 0px 0px 0px;}
+._kji_{display:table-cell;vertical-align:top;}
+
+
+._flx{height:70px;flex-direction:row;justify-content:space-between;align-items:center;flex-wrap:nowrap;align-content:center;display:flex;}
+.mf_t img{width:100%;height:100%;}
+.mf_t{
+cursor:pointer;
+width:40px;
+color:#ffffff;
+padding:5px;
+display:inline-block;
+margin:5px;
+border-radius:3px;
+cursor:pointer;
+box-sizing:border-box;
+text-align:center;
+height:40px;
+}
+.c_mod{color:#444;font-size:14px;position:relative;}
+.mf_t:hover{z-index:1;transform: scale(1.2);}
+._r{background-color:rgb(202 28 28);}
+._b{background-color:rgb(44 115 229);}
+._o{background-color:rgb(207 129 21);}
