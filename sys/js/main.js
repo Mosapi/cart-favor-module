@@ -17,7 +17,7 @@ cr_fom = 1; //if 0 - статическая корзина, 1 - нет
 cr_iom = 1; //if 0 - статический контент, 1 - нет
 cr_stca = '.krug_g3' //id or class .krug_im
 cr_know = '';
-cr_cab = ''; //корзина валуе
+cr_cab = []; //массив значений в корзине
 
 acab = document.querySelector('#addcab');
 fcab = document.querySelector('#favorite');//favorite
@@ -29,6 +29,7 @@ farimg = document.querySelector('#favor');//favor №1
 farimg2 = document.querySelector('#favor2');//favor №2
 to4k = document.querySelector('#cr_pod');//to4k cart №2
 carmas = document.querySelectorAll(cr_stca);
+iarmas = document.querySelectorAll(".krug_im");
 
 
 load_car();
@@ -47,25 +48,62 @@ if(carmas && cr_iom == 0){
 	Array.from(carmas, el => el.addEventListener('mouseleave', e => {img_eop(el,e);}));
 }
 if(carmas && cr_iom == 1){
+	// Перебираем все элементы img списка и присваиваем нужное значение
+	for (task of iarmas) {
+		task.draggable = true;
+	}
 	//перетаскивание в корзину
 	Array.from(carmas, el => el.addEventListener('dragstart', e => {cont_d(el,e);}));
 	//отпускание прям над корзиной
 	document.addEventListener('dragend', e => {cont_v(cr_know,e);})
 }
 
+carimg.addEventListener("click", car_watch);
 
 
+
+function car_watch(){
+	monstr = document.querySelector("#cart_cont");
+	if(monstr){}else{
+		constr = document.querySelector("#cart_val"); //находим поле значения корзины
+		console.log(constr);
+		constr2 = constr.parentElement;//.parentElement; //находим поле значения корзины
+		constr2.insertAdjacentHTML("beforeend","<div style='position:absolute;padding:5px;right:0px;z-index:99;margin-top: -5px;'><div id='cart_cont' style='width:380px;border-radius:6px;background-color:rgb(255 255 255 / 91%);box-shadow:0 0 3px #444;padding:10px;'></div></div>");
+		castr = document.querySelector("#cart_cont");
+		if(cr_cab.length<=0){
+			castr.innerHTML = "<span>В корзину еще ничего не добавлено</span>";
+		}else{
+			//перебираем cr_cab
+			//если кол-во игр больше допустимого, то в конце вместо последней игры отображаемой ставим блок +еще и кол-во оставшихся игр
+			// каждую можно удалить с пересчетом оставшихся и  скрытых.
+			//castr.innerHTML = "<span>В корзине: "+cr_cab.length+" игр</span>";
+			castr.innerHTML = "<div><div><span>Cart</span></div><div style='overflow-x:auto;'><div id='gam_incart' style='display:flex;position:relative;width: 400px;'><div style='width:100px;margin:5px;position:relative;'><div><img src='content/img/83.jpeg' style='width:100%;border-radius: 6px;'></div><div style='font-size:10px;'>Cyberpunk 2077</div></div></div></div><div style='display:flex;margin-top:10px;'><div><button id='incart'>In Cart</button></div><div><button id='incler'>Clear</button></div></div></div>";
+			
+		}
+		constr2.addEventListener('mouseleave', function(){
+			//castr.parentElement.remove();
+		});
+	}
+}
 function add_cab(){//добавление игры в корзину
+		console.log(cr_know);
 		tik = Number(cabin.innerText)+1;
 		carimg.style.transform = "scale(1.2)";
 		carimg2.style.transform = "scale(1.2)";
 		setTimeout(function tack(){
 			carimg.style.transform = null;
 			carimg2.style.transform = null;
+			to4k.style.display = 'block';
+		}, 1000);
+			if(cr_know == ''){cr_know = acab.getAttribute("game");}
+			goss = cr_cab.indexOf(cr_know) != -1;
+			if(goss){}else{
+			cr_cab.push(cr_know);
+			console.log(cr_cab);
 			cabin.innerHTML = tik;
 			cabin2.innerHTML = tik;
-			to4k.style.display = 'block';
-			}, 1000);
+			//cr_know == ''; //проверить со страницами нескольких продуктов мб, будет баг с сохранением в перемен. предыдущего значения
+			}
 	
 }
 function load_car(){//работа связанная с корзиной
@@ -130,20 +168,17 @@ function img_eop(el,e){
 function cont_d(el,e){
 	var kok = el; // element krug_g3
 	var lok = e; //event
-	cr_know = kok.getAttribute("game"); //
+	//if(cr_know == ''){cr_know = kok.getAttribute("game");}
+	cr_know = kok.getAttribute("game");
 	dinn = kok.firstElementChild; // krug_g1
+	pipi = dinn.querySelector(".krug_im");//
 	console.log("тащу "+cr_know);
+	
 }
 function cont_v(el,e){
 	var kok = el; // element корзина 1
 	var lok = e; //event
-	if(cr_cab == cr_know){
-		console.log('в корзине уже есть эта игра');
-	}else{
-		cr_cab = cr_cab+','+ cr_know
-		console.log(cr_cab);
-		add_fab();
-	}
+	add_cab(); //заменить на анимацию корзины
 }
 
 
