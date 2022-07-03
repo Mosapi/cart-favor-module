@@ -10,7 +10,7 @@ cr_wind = 1; //if 0 - не будет окна при клике по корзи
 cr_stca = '.krug_g3' //id or class .krug_im
 cr_know = '';
 cr_cab = []; //массив значений в корзине
-
+cr_url = '/cart';// url cart
 crm_id = '#cart'; //id cort
 fam_id = '#favor'; //id favor
 
@@ -59,7 +59,7 @@ carimg.addEventListener("click", car_watch);
 
 function car_watch(){
 	if(cr_wind == 0){ //если 0 то не будет всплывающего окна
-		
+		window.location.href = cr_url;
 	}else{
 	monstr = document.querySelector("#cart_cont");
 	if(monstr){}else{
