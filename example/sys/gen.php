@@ -3,21 +3,34 @@ session_start();
 define("SITEROOTDIR", $_SERVER['DOCUMENT_ROOT']);
 require_once ('gen0.php');
 
-if (isset($_POST['d'])) 
+if (isset($_POST['par0'])) 
 {
-$da_is = $_POST['d'];
-$da_ks = $_POST['v'];
-$da_ls = $_POST['m'];
-$da_ms = $_POST['n'];
-$da_ss = $_POST['i'];
-$da_ww = $_POST['w'];
+$par0 = $_POST['par0'];
+$par1 = $_POST['par1'];
 
-if($da_is == 'do_tag'){
-	
+if($par0 == 'load_cart'){//загрузка текущей корзины
+	$tp_load = mysqli_query($link, "SELECT 1 FROM ga_tempcart WHERE uid='{$par1}'");
+	$t_load = mysqli_num_rows($tp_load);
+	if($t_load != 0){
+		$tp_load = mysqli_query($link, "SELECT gmurls FROM ga_tempcart WHERE uid='{$par1}'");
+		$t_mass = mysqli_fetch_array($tp_load);
+		$t_spisd = $t_mass['gmurls'];
+		if($t_spisd != '' or $t_spisd != 0 or $t_spisd != null){
+			$t_spis = $t_spisd;
+			echo $t_spis;
+		}else{
+			//$t_spis = 'soso4ek';
+			//echo $t_spis;
+		}
+		
+	}
 }
-
+if($par0 == 'add_incart'){//обновление наполнения корзины
+	mysqli_query($link, "UPDATE `l_projects` SET `bl1` = '{$da_is}' WHERE `id`='{$da_ls}' and `author` = '{$_SESSION['user_id']}'");//
+}
 
 }else{
 	header("Location: /");exit;
+	//echo "shit";
 }
 ?>

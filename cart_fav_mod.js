@@ -1,11 +1,12 @@
 document.addEventListener("DOMContentLoaded", function(event) { 
 
-cr_timek = 5000; //timer for move cart
+cr_timek = 3000; //timer for move cart
 cr_fom = 1; //if 0 - статическая корзина без покачивания, 1 - с покачиванием
-cr_iom = 0; //if 0 - статический контент, нельзя дропать, 1 - можно
+cr_iom = 1; //if 0 - статический контент, нельзя дропать, 1 - можно
 cr_unco = 1; //if 0 - необходимо доводить непременно до корзины, чтобы засчитало добавление, 
 			 // 1 - слегка сдвинуть в любую сторону.
 			 //чтобы это сделать, надо придумать как добавлять так же фаворите
+cr_wind = 1; //if 0 - не будет окна при клике по корзине, а сразу переход. 1 - будет всплывающее окно
 cr_stca = '.krug_g3' //id or class .krug_im
 cr_know = '';
 cr_cab = []; //массив значений в корзине
@@ -26,7 +27,7 @@ carmas = document.querySelectorAll(cr_stca);
 iarmas = document.querySelectorAll(".krug_im");
 
 
-//load_car();
+preload_car();
 
 setInterval(() => load_car(), cr_timek);//запускает загрузку и проверку корзины
 
@@ -57,10 +58,13 @@ carimg.addEventListener("click", car_watch);
 
 
 function car_watch(){
+	if(cr_wind == 0){ //если 0 то не будет всплывающего окна
+		
+	}else{
 	monstr = document.querySelector("#cart_cont");
 	if(monstr){}else{
 		constr = document.querySelector("#cart_val"); //находим поле значения корзины
-		constr2 = constr.parentElement;//.parentElement; //находим поле значения корзины
+		constr2 = constr.parentElement;//.parentElement; //находим родителя корзины
 		constr2.insertAdjacentHTML("beforeend","<div style='position:absolute;padding:5px;right:0px;z-index:99;margin-top: -5px;'><div id='cart_cont' style='width:380px;border-radius:6px;background-color:rgb(255 255 255 / 91%);box-shadow:0 0 3px #444;padding:10px;'></div></div>");
 		castr = document.querySelector("#cart_cont");
 		if(cr_cab.length<=0){
@@ -73,6 +77,7 @@ function car_watch(){
 		constr2.addEventListener('mouseleave', function(){
 			//castr.parentElement.remove(); //автоскрытие корзины, в конце раскоментить. НЕ УДАЛЯТЬ!!
 		});
+	}
 	}
 }
 function add_cab(){//добавление игры в корзину
@@ -87,24 +92,48 @@ function add_cab(){//добавление игры в корзину
 		}, 1000);
 			if(cr_know == ''){cr_know = acab.getAttribute("game");}
 			goss = cr_cab.indexOf(cr_know) != -1;
-			if(goss){}else{
+			if(goss){
+				//console.log("типа типа типа"); //срабатывает если добавляемые игры уже есть в списке
+			}else{
 			cr_cab.push(cr_know);
 			console.log(cr_cab);
 			cabin.innerHTML = tik;
 			cabin2.innerHTML = tik;
 			}
+			//отправка в бд темпкорзина продукта
 	
 }
 function load_car(){//работа связанная с корзиной
-	//запрос в бд на наличие товара в корзине/сверка товара с таблицей каждый тик - Работает!
-	//console.log('test proverka zapuska pri zagruzke');
-	//carimg
 	g = cabin2.innerHTML; //наличие объекта в корзинке
 	if(g != 0 && cr_fom == 1){
 		//setInterval(() => cart_anim(), cr_timek); //покачивание корзинки
 		setTimeout(() => cart_anim());
 	}
-	
+}
+function preload_car(){//работа связанная с корзиной обновление ее содерждимого при загрузке страницы и при клике по ней
+	var par = ['load_cart', '1'];
+	var formData = new FormData();
+	for(var i=0;i<2;i++){
+		formData.append("par"+i, par[i]);
+	}
+	fetch('/sys/gen.php', {
+		method: 'POST',
+		credentials: 'same-origin',
+		body: formData
+	})
+	.then(response => response.text())
+	.then(function(data) {
+		vcart = data;
+		gug = data.split(','); //массив товара
+		if(gug.length >0 && gug != '' || quq != 0){
+		cr_cab = gug;
+		//отрисовать кол-во на корзине
+		cabin.innerHTML = gug.length;
+		cabin2.innerHTML = gug.length;
+		to4k.style.display = 'block';
+		}
+	})
+	.catch(error => console.log());
 }
 
 function cart_anim(){//анимация качания корзинки из стороны в сторону
@@ -133,7 +162,8 @@ function add_fab(){//Добавление в любимое
 		din.setAttribute('src', 'content/ico/fav2.png');//смена обратно картинки
 		pin.remove();//удаление временного блока
 	}, 1000);
-	console.log(cr_know);
+	//console.log(cr_know);
+	//отправка в бд фавор продукта
 }
 
 function img_dop(el,e){
@@ -166,7 +196,7 @@ function cont_d(el,e){
 	cr_know = kok.getAttribute("game");
 	dinn = kok.firstElementChild; // krug_g1
 	pipi = dinn.querySelector(".krug_im");//
-	console.log("тащу "+cr_know);
+	//console.log("тащу "+cr_know);
 	
 }
 function cont_v(el,e){
@@ -176,18 +206,18 @@ function cont_v(el,e){
 	cordy = e.pageY;
 	//console.log(cordx+' - '+cordy);
 	cacf = allElementsFromPoint(cordx,cordy);
-	console.log(cacf); //получаем массив всех элементов под курсором во время отпускания клавиши мыши
+	//console.log(cacf); //получаем массив всех элементов под курсором во время отпускания клавиши мыши
 	for (var k =0, kl=cacf.length; k< kl; k++){
 		elemc = cacf[k];
 		jedo = cacf[cacf.length-2];
 		telemc = '#'+jedo.getAttribute("id");
-		console.log(telemc); //cart
+		//console.log(telemc); //cart
 		if(telemc == crm_id){
-			console.log("work on!");
+			//console.log("work on!");
 			add_cab(); //анимация корзины
 		}
 		if(telemc == fam_id){
-			console.log("work on!");
+			//console.log("work on!");
 			add_fab(); //анимация желаемого
 		}
 	}
