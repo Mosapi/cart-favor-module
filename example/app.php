@@ -1,3 +1,7 @@
+<?
+session_start(); 
+require_once ('sys/gen0.php');
+?>
 <!DOCTYPE html>
 <html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -6,7 +10,7 @@
 <meta name="keywords" content="">
 <title>...</title>
 <link type="image/x-icon" rel="icon" href="" />
-<link rel="stylesheet" type="text/css" media="all"  href="sys/css/dommon.css" />
+<link rel="stylesheet" type="text/css" media="all"  href="/sys/css/dommon.css" />
 <body>
 <div class="mess">
 	<div id='header2'>
@@ -15,9 +19,9 @@
 		</div>
 		<div class='_kji_ rih'>
 			<div class='_flx'>
-				<div class="c_mod"><a><span id="down" class="mf_t _b"><img src="content/ico/down.png"></span></a></div>
-				<div class="c_mod"><a><span id="cart" class="mf_t _r"><img src="content/ico/cart.png"></span></a><div id='cart_val'></div></div>
-				<div class="c_mod"><a href='#favorite'><span id="favor" class="mf_t _s"><img src="content/ico/fav.png"></span></a></div>
+				<div class="c_mod"><a><span id="down" class="mf_t _b"><img src="/content/ico/down.png"></span></a></div>
+				<div class="c_mod"><a><span id="cart" class="mf_t _r"><img src="/content/ico/cart.png"></span></a><div id='cart_val'></div></div>
+				<div class="c_mod"><a href='#favorite'><span id="favor" class="mf_t _s"><img src="/content/ico/fav.png"></span></a></div>
 			</div>
 		</div>
 	</div>
@@ -29,15 +33,17 @@
 		</div>
 		<div class='_kji_ rih'>
 			<div class='_flx'>
-				<div class="c_mod"><a><span id="down" class="mf_t"><img src="content/ico/down2.png"></span></a></div>
+				<div class="c_mod"><a><span id="down" class="mf_t"><img src="/content/ico/down2.png"></span></a></div>
 				<div class="c_mod">
-					<div><a><span class="mf_t"><img id="cart2" src="content/ico/cart2.png"></span></a></div>
+					<div><a><span class="mf_t"><img id="cart2" src="/content/ico/cart2.png"></span></a></div>
 					<div style="display:flex;position:absolute;margin:-16px 10px;">
-						<div id='cr_pod' style='display:none;height:15px;width:15px;background-color:#cf0de7;border-radius:9px;box-shadow:0 0 2px #000;'></div>
+						<div style='height:15px;width:15px;'>
+							<div id='cr_pod' style='display:none;height:15px;width:15px;background-color:#cf0de7;border-radius:9px;box-shadow:0 0 2px #000;'></div>
+						</div>
 						<div id='cart_val2' style='margin-left:14px;'></div>
 					</div>
 				</div>
-				<div class="c_mod"><a href='#favorite'><span class="mf_t"><img id="favor2" src="content/ico/fav2.png"></span></a></div>
+				<div class="c_mod"><a href='#favorite'><span class="mf_t"><img id="favor2" src="/content/ico/fav2.png"></span></a></div>
 			</div>
 		</div>
 	</div>
@@ -47,12 +53,12 @@
 		<div class='_flx' style='align-items:stretch;'>
 			<div style='width:800px;display:flex;'>
 				<div style='width:234px;height:350px;background-color:#fff;margin:6px;border-radius:6px;'>
-					<img src="content/img/83.jpeg" style="width: 100%;height:100%;box-shadow:0 0 3px rgb(72 72 72 / 68%);border-radius:6px;">
+					<img src="/content/img/83.jpeg" style="width: 100%;height:100%;box-shadow:0 0 3px rgb(72 72 72 / 68%);border-radius:6px;">
 				</div>
 				<div style="">
 					<div style="margin-left:30px;margin-top:30px;">
 						<div style='font-size:24px;color: #000;'> Cyberpunk 2077 </div>
-						<div style='font-size:12px;color:#484848;margin-top:6px;'><a href='store.html'>Store</a> | Cyberpunk 2077 </div>
+						<div style='font-size:12px;color:#484848;margin-top:6px;'><a href='/'>Store</a> | Cyberpunk 2077 </div>
 						<div style='margin-top:40px;' class='table_har'>
 							<div style='display:flex;line-height:20px;'>
 								<div style='width:100px;'>Genre:</div>
@@ -98,13 +104,13 @@
 		</div>
 	</div>
 </div>
-<script type="text/javascript" src="sys/js/main.js"></script>
+<script type="text/javascript" src="/sys/js/muden.js"></script>
 <div id="pages_bottom" >
 	<div>
 		<a class="podol_n" href="/">© Cart mod. </a> |
-		<a class="podol_n" href="index.html">Product</a> |
-		<a class="podol_n" href="store.html">Store</a> |
-		<a class="podol_n" href="cart.html">Cart</a>
+		<a class="podol_n" href="/app">Product</a> |
+		<a class="podol_n" href="/">Store</a> |
+		<a class="podol_n" href="cart.php">Cart</a>
 	</div>
 </div>
 </body>
