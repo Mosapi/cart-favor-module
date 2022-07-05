@@ -25,7 +25,8 @@ farimg2 = document.querySelector('#favor2');//favor №2
 to4k = document.querySelector('#cr_pod');//to4k cart №2
 carmas = document.querySelectorAll(cr_stca);
 iarmas = document.querySelectorAll(".krug_im");
-
+fbut = document.querySelector("#incart");
+fbut2 = document.querySelector("#incler");
 
 preload_car();
 
@@ -70,12 +71,22 @@ function car_watch(){
 		if(cr_cab.length<=0){
 			castr.innerHTML = "<div style='padding:40px;position:relative;z-index:10;text-align:center;color:gray;background:#fff;height:100px;'><div style='font-size:16px;color:#b400ff;font-weight:600;padding:10px 0px;border-bottom:1px solid #dfdfdf;'>Корзина пуста</div><div style='font-size:12px;text-transform:none;padding:10px 0px;'>Исcледуйте лучшие продукты и предложения</div><div><a href='/'><button id='incler'>Исследовать</button></a></div></div>";
 		}else{
-			//castr.innerHTML = "<span>В корзине: "+cr_cab.length+" игр</span>";
-			castr.innerHTML = "<div><div><span>Cart</span></div><div style='overflow-x:auto;'><div id='gam_incart' style='display:flex;position:relative;width: 400px;'><div style='width:100px;margin:5px;position:relative;'><div><img src='content/img/83.jpeg' style='width:100%;border-radius: 6px;'></div><div style='font-size:10px;'>Cyberpunk 2077</div></div></div></div><div style='display:flex;margin-top:10px;'><div><button id='incart'>In Cart</button></div><div><button id='incler'>Clear</button></div></div></div>";
+			castr.innerHTML = "<div><div><span>Cart</span></div><div style='overflow-y:auto;max-height:360px;'><div id='gam_incart' style='display:flex;position:relative;flex-wrap:wrap;'><div style='width:80px;margin:5px;position:relative;'><div><img src='content/img/83.jpeg' style='width:100%;border-radius: 6px;'></div><div style='font-size:10px;'>Cyberpunk 2077</div></div></div></div><div style='display:flex;margin-top:20px;'><div><button id='incart'>In Cart</button></div><div><button id='incler'>Clear</button></div></div></div>";
+			jonst = document.querySelector("#gam_incart");//
+			var opt = ['load_cart'];
+			//dataSet(opt);
+			//jonstr.innerHTML = ''; //вставляем данные об играх, картинку и название
 			
 		}
 		constr2.addEventListener('mouseleave', function(){
-			//castr.parentElement.remove(); //автоскрытие корзины, в конце раскоментить. НЕ УДАЛЯТЬ!!
+			castr.parentElement.remove(); //автоскрытие корзины, в конце раскоментить. НЕ УДАЛЯТЬ!!
+		});
+		fbut2.addEventListener('click', function(){
+			//очистка корзины
+			//удаляем cr_cab, innerHTML  корзины и закрываем корзину, отправляя запрос в бд об очистке
+		});
+		fbut.addEventListener('click', function(){
+			window.location.href = cr_url;
 		});
 	}
 	}
@@ -99,9 +110,10 @@ function add_cab(){//добавление игры в корзину
 			console.log(cr_cab);
 			cabin.innerHTML = tik;
 			cabin2.innerHTML = tik;
+			//отправка в бд темпкорзина продукта cо страницы сторе - ворк!
+			var opt = ['add_incart', cr_cab];
+			dataSet(opt);
 			}
-			//отправка в бд темпкорзина продукта
-	
 }
 function load_car(){//работа связанная с корзиной
 	g = cabin2.innerHTML; //наличие объекта в корзинке
@@ -241,6 +253,40 @@ function allElementsFromPoint(x, y) {
     }
     elements.reverse();
     return elements;
+}
+
+function dataSet(opt) {
+	nit = opt;
+	console.log(opt);//надо изменить формат данных, сейчас не записывается в корзину более 1 игры.
+	//var par = ['load_cart', '1'];
+	var par = nit;
+	var formData = new FormData();
+	for(var i=0;i<opt.length;i++){
+		formData.append("par"+i, par[i]);
+	}
+	console.log(opt.length);
+	
+	fetch('/sys/gen.php', {
+		method: 'POST',
+		credentials: 'same-origin',
+		body: formData
+	})
+	.then(response => response.text())
+	.then(function(data) {
+		//vcart = data;
+		gug = data.split(','); //массив товара
+		if(gug.length >0 && gug != '' || quq != 0){
+		cr_cab = gug;
+		//отрисовать кол-во на корзине
+		cabin.innerHTML = gug.length;
+		cabin2.innerHTML = gug.length;
+		to4k.style.display = 'block';
+		//return datas;
+		}
+	})
+	.catch(error => console.log());
+	
+	//return datas;
 }
 
 });

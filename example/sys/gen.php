@@ -26,7 +26,9 @@ if($par0 == 'load_cart'){//загрузка текущей корзины
 	}
 }
 if($par0 == 'add_incart'){//обновление наполнения корзины
-	mysqli_query($link, "UPDATE `l_projects` SET `bl1` = '{$da_is}' WHERE `id`='{$da_ls}' and `author` = '{$_SESSION['user_id']}'");//
+	//mysqli_query($link, "UPDATE `ga_tempcart` SET `gmurls` = '{$par1}' WHERE `uid`='1' and `author` = '{$_SESSION['user_id']}'");//
+	$_SESSION['user_id'] = 1;
+	mysqli_query($link, "UPDATE `ga_tempcart` SET `gmurls` = '{$par1}' WHERE `uid`='{$_SESSION['user_id']}'");
 }
 
 }else{
