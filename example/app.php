@@ -95,7 +95,7 @@ require_once ('sys/gen0.php');
 							</div>
 						</div>
 						<div style="height: 50px;padding: 10px;padding-bottom: 0px;" opt="1234">
-							<button id='addcab' game='Cuberpunk2077' style="height: 40px;width: 330px;background-color:#000;color:#fff;font-weight:600;border-radius:6px;border:none;box-shadow:0 0 3px rgb(72 72 72 / 68%);">Add to cart</button>
+							<button id='addcab' game='Cyberpunk2077' style="height: 40px;width: 330px;background-color:#000;color:#fff;font-weight:600;border-radius:6px;border:none;box-shadow:0 0 3px rgb(72 72 72 / 68%);">Add to cart</button>
 						</div>
 						<div id='favorite' style="height:30px;text-align:center;">Add to favorite</div>
 					</div>

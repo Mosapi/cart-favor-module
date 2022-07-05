@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", function(event) { 
 
 cr_timek = 3000; //timer for move cart
-cr_fom = 1; //if 0 - статическая корзина без покачивания, 1 - с покачиванием
-cr_iom = 1; //if 0 - статический контент, нельзя дропать, 1 - можно
+cr_fom = 1; //if 0 - статическая корзина без покачивания, 1 - с покачиванием, 2 - скейлинг медленный
+cr_iom = 0; //if 0 - статический контент, нельзя дропать, 1 - можно
 cr_unco = 1; //if 0 - необходимо доводить непременно до корзины, чтобы засчитало добавление, 
 			 // 1 - слегка сдвинуть в любую сторону.
 			 //чтобы это сделать, надо придумать как добавлять так же фаворите
@@ -13,6 +13,7 @@ cr_cab = []; //массив значений в корзине
 cr_url = '/cart';// url cart
 crm_id = '#cart'; //id cort
 fam_id = '#favor'; //id favor
+inf_gam = []; //parametrs games in cart
 
 acab = document.querySelector('#addcab');
 fcab = document.querySelector('#favorite');//favorite
@@ -25,8 +26,7 @@ farimg2 = document.querySelector('#favor2');//favor №2
 to4k = document.querySelector('#cr_pod');//to4k cart №2
 carmas = document.querySelectorAll(cr_stca);
 iarmas = document.querySelectorAll(".krug_im");
-fbut = document.querySelector("#incart");
-fbut2 = document.querySelector("#incler");
+
 
 preload_car();
 
@@ -68,26 +68,49 @@ function car_watch(){
 		constr2 = constr.parentElement;//.parentElement; //находим родителя корзины
 		constr2.insertAdjacentHTML("beforeend","<div style='position:absolute;padding:5px;right:0px;z-index:99;margin-top: -5px;'><div id='cart_cont' style='width:380px;border-radius:6px;background-color:rgb(255 255 255 / 91%);box-shadow:0 0 3px #444;padding:10px;'></div></div>");
 		castr = document.querySelector("#cart_cont");
-		if(cr_cab.length<=0){
+		if(cr_cab.length<=0){//проверить знаки
 			castr.innerHTML = "<div style='padding:40px;position:relative;z-index:10;text-align:center;color:gray;background:#fff;height:100px;'><div style='font-size:16px;color:#b400ff;font-weight:600;padding:10px 0px;border-bottom:1px solid #dfdfdf;'>Корзина пуста</div><div style='font-size:12px;text-transform:none;padding:10px 0px;'>Исcледуйте лучшие продукты и предложения</div><div><a href='/'><button id='incler'>Исследовать</button></a></div></div>";
 		}else{
-			castr.innerHTML = "<div><div><span>Cart</span></div><div style='overflow-y:auto;max-height:360px;'><div id='gam_incart' style='display:flex;position:relative;flex-wrap:wrap;'><div style='width:80px;margin:5px;position:relative;'><div><img src='content/img/83.jpeg' style='width:100%;border-radius: 6px;'></div><div style='font-size:10px;'>Cyberpunk 2077</div></div></div></div><div style='display:flex;margin-top:20px;'><div><button id='incart'>In Cart</button></div><div><button id='incler'>Clear</button></div></div></div>";
+			//надо пересмотреть форму корзины.
+			//разбираем cr_cab
+			castr.innerHTML = "<div><div><span>Cart</span></div><div><div id='gam_incart' style='display:none;position:relative;flex-wrap:wrap;overflow-y:auto;max-height:170px;'></div></div><div style='display:flex;margin-top:20px;'><div><button id='incart'>In Cart</button></div><div><button id='inkler'>Clear</button></div></div></div>";
 			jonst = document.querySelector("#gam_incart");//
-			var opt = ['load_cart'];
-			//dataSet(opt);
-			//jonstr.innerHTML = ''; //вставляем данные об играх, картинку и название
+			console.log(cr_cab);
+			for (l=0; l<cr_cab.length;l++){
+				var mint = cr_cab[l]; //сокращение игры
+				var opt = ['load_info', mint];
+				dataSet(opt);
+				//перенесено определение игр в запрос фетч
+			}
+			//нужно отобразить загрузку пока идет выборка игр
 			
+			setTimeout(function buildfc(){
+				//пока не получим параметр об окончании выборки крутим загрузку
+				console.log('крутиверти');
+				jonst.style.display = 'flex';
+			}, 5000);
 		}
+		fbut = document.querySelector("#incart"), fbut2 = document.querySelector("#inkler");
 		constr2.addEventListener('mouseleave', function(){
 			castr.parentElement.remove(); //автоскрытие корзины, в конце раскоментить. НЕ УДАЛЯТЬ!!
 		});
-		fbut2.addEventListener('click', function(){
-			//очистка корзины
-			//удаляем cr_cab, innerHTML  корзины и закрываем корзину, отправляя запрос в бд об очистке
-		});
-		fbut.addEventListener('click', function(){
-			window.location.href = cr_url;
-		});
+		if(fbut){
+			fbut.addEventListener('click', function(){
+				window.location.href = cr_url;
+			});
+		}
+		if(fbut2){
+			fbut2.addEventListener('click', function(){
+				var opt = ['del_incart'];
+				cr_cab = '';//очищаем память
+				castr.innerHTML = "<div style='padding:40px;position:relative;z-index:10;text-align:center;color:gray;background:#fff;height:100px;'><div style='font-size:16px;color:#b400ff;font-weight:600;padding:10px 0px;border-bottom:1px solid #dfdfdf;'>Корзина пуста</div><div style='font-size:12px;text-transform:none;padding:10px 0px;'>Исcледуйте лучшие продукты и предложения</div><div><a href='/'><button id='inkler'>Исследовать</button></a></div></div>";
+				//обновить визуал корзины
+				cabin.innerHTML = '';
+				cabin2.innerHTML = '';
+				to4k.style.display = 'none';
+				dataSet(opt);
+			});
+		}
 	}
 	}
 }
@@ -101,7 +124,7 @@ function add_cab(){//добавление игры в корзину
 			carimg2.style.transform = null;
 			to4k.style.display = 'block';
 		}, 1000);
-			if(cr_know == ''){cr_know = acab.getAttribute("game");}
+			if(cr_know == ''){cr_know = acab.getAttribute("game");console.log(cr_know);}
 			goss = cr_cab.indexOf(cr_know) != -1;
 			if(goss){
 				//console.log("типа типа типа"); //срабатывает если добавляемые игры уже есть в списке
@@ -110,7 +133,6 @@ function add_cab(){//добавление игры в корзину
 			console.log(cr_cab);
 			cabin.innerHTML = tik;
 			cabin2.innerHTML = tik;
-			//отправка в бд темпкорзина продукта cо страницы сторе - ворк!
 			var opt = ['add_incart', cr_cab];
 			dataSet(opt);
 			}
@@ -123,7 +145,8 @@ function load_car(){//работа связанная с корзиной
 	}
 }
 function preload_car(){//работа связанная с корзиной обновление ее содерждимого при загрузке страницы и при клике по ней
-	var par = ['load_cart', '1'];
+	var userid = 1;//мб лучше из сессии брать
+	var par = ['load_cart', userid];
 	var formData = new FormData();
 	for(var i=0;i<2;i++){
 		formData.append("par"+i, par[i]);
@@ -135,13 +158,13 @@ function preload_car(){//работа связанная с корзиной о�
 	})
 	.then(response => response.text())
 	.then(function(data) {
-		vcart = data;
+		//vcart = data;
 		gug = data.split(','); //массив товара
 		if(gug.length >0 && gug != '' || quq != 0){
 		cr_cab = gug;
 		//отрисовать кол-во на корзине
-		cabin.innerHTML = gug.length;
-		cabin2.innerHTML = gug.length;
+		cabin.innerHTML = cr_cab.length;
+		cabin2.innerHTML = cr_cab.length;
 		to4k.style.display = 'block';
 		}
 	})
@@ -256,16 +279,11 @@ function allElementsFromPoint(x, y) {
 }
 
 function dataSet(opt) {
-	nit = opt;
-	console.log(opt);//надо изменить формат данных, сейчас не записывается в корзину более 1 игры.
-	//var par = ['load_cart', '1'];
-	var par = nit;
+	var par = opt;
 	var formData = new FormData();
 	for(var i=0;i<opt.length;i++){
 		formData.append("par"+i, par[i]);
 	}
-	console.log(opt.length);
-	
 	fetch('/sys/gen.php', {
 		method: 'POST',
 		credentials: 'same-origin',
@@ -273,15 +291,38 @@ function dataSet(opt) {
 	})
 	.then(response => response.text())
 	.then(function(data) {
-		//vcart = data;
 		gug = data.split(','); //массив товара
-		if(gug.length >0 && gug != '' || quq != 0){
-		cr_cab = gug;
-		//отрисовать кол-во на корзине
-		cabin.innerHTML = gug.length;
-		cabin2.innerHTML = gug.length;
-		to4k.style.display = 'block';
-		//return datas;
+		if(gug.length >0 && gug != '' || gug != 0){//проверка на не пустой массив
+		//надо как-то проверять что за массив вернулся?
+		var tenz = gug.indexOf('param') != -1;
+		if(tenz){
+			//значит мы выбираем инфу о продукте
+			inf_gam = gug;
+			if(inf_gam.length != 0){
+				var cimg = inf_gam[1];
+				var tnamer = inf_gam[0];
+				var opname = tnamer.length;
+				if(opname > 13){
+					var cname = tnamer.substr(0, 12)+'...';
+				}else{
+					var cname = tnamer;
+				}
+				var bint = 'xtnj';
+				jonst.insertAdjacentHTML("afterbegin", "<div style='width:80px;margin:5px;position:relative;'><div><a href='/app/"+bint+"'><img src='/content/img/"+cimg+"' style='width:100%;border-radius:6px;'></a></div><div style='font-size:9px;'>"+cname+"</div></div>");
+			}
+		}else{
+			var tenz = gug.indexOf('clear') != -1;
+			if(tenz){
+				console.log('Cart was clear');
+			}else{
+				//значит мы выбираем игры
+				cr_cab = gug;//запись массива игр из базы в переменную cr_cab
+				//отрисовать кол-во на корзине
+				cabin.innerHTML = gug.length;
+				cabin2.innerHTML = gug.length;
+				to4k.style.display = 'block';
+			}
+		}
 		}
 	})
 	.catch(error => console.log());
