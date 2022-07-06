@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", function(event) { 
 
-cr_timek = 3000; //timer for move cart
-cr_fom = 1; //if 0 - статическая корзина без покачивания, 1 - с покачиванием, 2 - скейлинг медленный
+cr_timek = 5000; //timer for move cart 3s for 0 and 1 mode,
+cr_fom = 0; //if 0 - статическая корзина без покачивания, 1 - с покачиванием, 2 - пульсация
 cr_iom = 0; //if 0 - статический контент, нельзя дропать, 1 - можно
 cr_unco = 1; //if 0 - необходимо доводить непременно до корзины, чтобы засчитало добавление, 
 			 // 1 - слегка сдвинуть в любую сторону.
@@ -92,7 +92,7 @@ function car_watch(){
 		}
 		fbut = document.querySelector("#incart"), fbut2 = document.querySelector("#inkler");
 		constr2.addEventListener('mouseleave', function(){
-			castr.parentElement.remove(); //автоскрытие корзины, в конце раскоментить. НЕ УДАЛЯТЬ!!
+			//castr.parentElement.remove(); //автоскрытие корзины, в конце раскоментить. НЕ УДАЛЯТЬ!!
 		});
 		if(fbut){
 			fbut.addEventListener('click', function(){
@@ -141,7 +141,11 @@ function load_car(){//работа связанная с корзиной
 	g = cabin2.innerHTML; //наличие объекта в корзинке
 	if(g != 0 && cr_fom == 1){
 		//setInterval(() => cart_anim(), cr_timek); //покачивание корзинки
-		setTimeout(() => cart_anim());
+		//setTimeout(() => cart_anim());
+	}
+	if(g != 0 && cr_fom == 2){
+		//setInterval(() => cart_anim(), cr_timek); //покачивание корзинки
+		setTimeout(() => cart_anim2());
 	}
 }
 function preload_car(){//работа связанная с корзиной обновление ее содерждимого при загрузке страницы и при клике по ней
@@ -158,9 +162,8 @@ function preload_car(){//работа связанная с корзиной о�
 	})
 	.then(response => response.text())
 	.then(function(data) {
-		//vcart = data;
 		gug = data.split(','); //массив товара
-		if(gug.length >0 && gug != '' || quq != 0){
+		if(gug.length >0){ //&& gug != '' || quq != 0
 		cr_cab = gug;
 		//отрисовать кол-во на корзине
 		cabin.innerHTML = cr_cab.length;
@@ -180,21 +183,35 @@ function cart_anim(){//анимация качания корзинки из с�
 	setTimeout(function tick(){carimg2.style.transform = "rotate(-0.03turn)";}, 500);
 	setTimeout(function tick(){carimg2.style.transform = "rotate(0.00turn)";}, 600);
 }
+function cart_anim2(){//анимация качания корзинки из стороны в сторону
+	setTimeout(function teck(){carimg2.style.transform = "scale(1.1)";}, 0);
+	setTimeout(function teck(){carimg2.style.transform = "scale(1.0)";}, 100);
+	setTimeout(function teck(){carimg2.style.transform = "scale(1.2)";}, 200);
+	setTimeout(function teck(){carimg2.style.transform = "scale(1.1)";}, 300);
+	setTimeout(function teck(){carimg2.style.transform = "scale(1.0)";}, 400);
+}
 function add_fab(){//Добавление в любимое
 	farimg.style.transform = "translate(0px, -16px)";//сдвиг вверх
 	/*==РАЗВОРОТ==*/
 	farimg2.style.transform = "scaleX(-1)";//разворот на обратную сторону
 	din = farimg2;//.querySelector('img');
-	din.setAttribute('src', 'content/ico/aplus2.png'); //заменяем картинку на +1
+	din.setAttribute('src', '/content/ico/aplus2.png'); //заменяем картинку на +1
 	/*==СДВИГ ВВЕРХ==*/
 	farimg.insertAdjacentHTML("beforeend","<div id='favr_val' style='color:#000;font-size:12pt;font-weight:600;margin-top:4px;'></div>");
 	pin = farimg.querySelector('#favr_val');
 	pin.innerHTML = '+1';
+	if(cr_know == ''){
+		cr_know = acab.getAttribute("game");console.log(cr_know + ' -2');
+	}else{
+		console.log(cr_know);
+	}
+	//var opt = ['add_infavt', cr_know];
+	//dataSet(opt);
 	
 	setTimeout(function stock(){
 		farimg.style.transform = null; //разворот обратно
 		farimg2.style.transform = null;
-		din.setAttribute('src', 'content/ico/fav2.png');//смена обратно картинки
+		din.setAttribute('src', '/content/ico/fav2.png');//смена обратно картинки
 		pin.remove();//удаление временного блока
 	}, 1000);
 	//console.log(cr_know);
