@@ -18,33 +18,7 @@ require_once ('sys/gen0.php');
 			<div class=''><a href='/'>Cart mod.</a></div>
 		</div>
 		<div class='_kji_ rih'>
-			<div class='_flx'>
-				<div class="c_mod"><a><span id="down" class="mf_t _b"><img src="content/ico/down.png"></span></a></div>
-				<div class="c_mod"><a><span id="cart" class="mf_t _r"><img src="content/ico/cart.png"></span></a><div id='cart_val'></div></div>
-				<div class="c_mod"><a href='#favorite'><span id="favor" class="mf_t _s"><img src="content/ico/fav.png"></span></a></div>
-			</div>
-		</div>
-	</div>
-</div>
-<div class="mess">
-	<div id='header2'>
-		<div class='_kji_ lef'>
-			<div class=''><a></a></div>
-		</div>
-		<div class='_kji_ rih'>
-			<div class='_flx'>
-				<div class="c_mod"><a><span id="down" class="mf_t"><img src="content/ico/down2.png"></span></a></div>
-				<div class="c_mod">
-					<div><a><span class="mf_t"><img id="cart2" src="content/ico/cart2.png"></span></a></div>
-					<div style="display:flex;position:absolute;margin:-16px 10px;">
-						<div style='height:15px;width:15px;'>
-							<div id='cr_pod' style='display:none;height:15px;width:15px;background-color:#cf0de7;border-radius:9px;box-shadow:0 0 2px #000;'></div>
-						</div>
-						<div id='cart_val2' style='margin-left:14px;'></div>
-					</div>
-				</div>
-				<div class="c_mod"><a href='#favorite'><span class="mf_t"><img id="favor2" src="content/ico/fav2.png"></span></a></div>
-			</div>
+		<div id='rec_mod'></div>
 		</div>
 	</div>
 </div>
