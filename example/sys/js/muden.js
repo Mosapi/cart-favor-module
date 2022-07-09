@@ -138,27 +138,22 @@ function cont_d(){
 	cr_know = kok.getAttribute("game");
 	dinn = kok.firstElementChild; // krug_g1
 	pipi = dinn.querySelector(".krug_im");//
-	//console.log("тащу "+cr_know);
 }
 function cont_v(){
 	var kok = el; // element корзина 1
 	var lok = e; //event
 	cordx = e.pageX;
 	cordy = e.pageY;
-	//console.log(cordx+' - '+cordy);
 	cacf = AElemPoint(cordx,cordy);
-	//console.log(cacf); //получаем массив всех элементов под курсором во время отпускания клавиши мыши
+	//получаем массив всех элементов под курсором во время отпускания клавиши мыши
 	for (var k =0, kl=cacf.length; k< kl; k++){
 		elemc = cacf[k];
 		jedo = cacf[cacf.length-2];
 		telemc = '#'+jedo.getAttribute("id");
-		//console.log(telemc); //cart
 		if(telemc == crm_id){
-			//console.log("work on!");
 			add_cab(); //анимация корзины
 		}
 		if(telemc == fam_id){
-			//console.log("work on!");
 			add_fab(); //анимация желаемого
 		}
 	}
