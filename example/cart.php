@@ -34,7 +34,9 @@ require_once ('sys/gen0.php');
 		$gameg = mysqli_query($link, "SELECT gmurls FROM `ga_tempcart` Where uid='{$uid}'");
 		$full_tp = 0;
 		$f_gameg = mysqli_fetch_array($gameg);
-		$g_name = $f_gameg['gmurls']; //массив игр
+		$t_name = $f_gameg['gmurls']; //массив игр
+		$g_name = explode(",", $t_name);;
+		//echo $g_name;
 		for($i=0; $i<count($g_name); $i++){
 			$produkt = $g_name[$i];
 			$inf_pr = mysqli_query($link, "SELECT * FROM `ga_products` Where gurl='{$produkt}'");
