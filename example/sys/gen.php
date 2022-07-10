@@ -31,11 +31,12 @@ if($par0 == 'load_info'){//загрузка инфы об игре котора�
 	$ti_load = mysqli_query($link, "SELECT 1 FROM ga_products WHERE gurl='{$par1}'");
 	$ti_load = mysqli_num_rows($ti_load);
 	if($ti_load != 0){
-		$ti2_load = mysqli_query($link, "SELECT name,banner FROM ga_products WHERE gurl='{$par1}'");
+		$ti2_load = mysqli_query($link, "SELECT name,banner,gurl FROM ga_products WHERE gurl='{$par1}'");
 		$ti_mass = mysqli_fetch_array($ti2_load);
 		$ti_name = $ti_mass['name'];
 		$ti_bann = $ti_mass['banner'];
-		$ti_spis = $ti_name.','.$ti_bann.',param';
+		$ti_gurl = $ti_mass['gurl'];
+		$ti_spis = $ti_name.','.$ti_bann.','.$ti_gurl.',param';
 		echo $ti_spis;
 	}
 }
@@ -55,6 +56,5 @@ if($par0 == 'del_incart'){//обновление наполнения корзи
 
 }else{
 	header("Location: /");exit;
-	//echo "shit";
 }
 ?>

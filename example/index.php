@@ -15,7 +15,7 @@ require_once ('sys/gen0.php');
 <div class="mess">
 	<div id='header2'>
 		<div class='_kji_ lef'>
-			<div class=''><a href='/'>Cart mod.</a></div>
+			<div class=''><a></a></div>
 		</div>
 		<div class='_kji_ rih'>
 		<div id='rec_mod'></div>
