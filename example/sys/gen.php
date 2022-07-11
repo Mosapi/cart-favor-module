@@ -40,16 +40,19 @@ if($par0 == 'load_info'){//загрузка инфы об игре котора�
 		echo $ti_spis;
 	}
 }
-if($par0 == 'add_incart'){//обновление наполнения корзины
-	//mysqli_query($link, "UPDATE `ga_tempcart` SET `gmurls` = '{$par1}' WHERE `uid`='1' and `author` = '{$_SESSION['user_id']}'");//
-	$_SESSION['user_id'] = 1;
-	mysqli_query($link, "UPDATE `ga_tempcart` SET `gmurls` = '{$par1}' WHERE `uid`='{$_SESSION['user_id']}'");
+if($par0 == 'add_incart'){//добавляем в корзину
+	$gast = 1; //$_SESSION['user_id']  //
+	mysqli_query($link, "UPDATE `ga_tempcart` SET `gmurls` = '{$par1}' WHERE `uid`='{$gast}'");
 }
-if($par0 == 'del_incart'){//обновление наполнения корзины
-	//mysqli_query($link, "UPDATE `ga_tempcart` SET `gmurls` = '{$par1}' WHERE `uid`='1' and `author` = '{$_SESSION['user_id']}'");//
-	$_SESSION['user_id'] = 1;
+if($par0 == 'add_infav'){//в фавориты
+	$gast = 1; //$_SESSION['user_id']  //
+	$f_data = $par1;
+	mysqli_query($link, "UPDATE `ga_userfav` SET `idgames` = CONCAT(`idgames`, '{$f_data},') WHERE `idusers`='{$gast}'");
+}
+if($par0 == 'del_incart'){//зачистка корзины
+	$gast = 1; //$_SESSION['user_id']  //
 	$par1 = '';
-	mysqli_query($link, "UPDATE `ga_tempcart` SET `gmurls` = '{$par1}' WHERE `uid`='{$_SESSION['user_id']}'");
+	mysqli_query($link, "UPDATE `ga_tempcart` SET `gmurls` = '{$par1}' WHERE `uid`='{$gas}'");
 	$ti_spis = 'clear';
 	echo $ti_spis;
 }

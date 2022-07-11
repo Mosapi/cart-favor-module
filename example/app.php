@@ -25,8 +25,8 @@ require_once ('sys/gen0.php');
 <div id='header' class='_t' style='border-radius:6px;'>
 	<div style='width:100%;max-width:1240px;'>
 	<?
-	if(isset($_GET['par'])){
-	$iprod = $_GET['par'];
+	if(isset($_GET['a'])){
+	$iprod = $_GET['a'];
 	$tp_load = mysqli_query($link, "SELECT 1 FROM ga_products WHERE gurl='{$iprod}'");
 	$t_load = mysqli_num_rows($tp_load);
 	if($t_load != 0){
@@ -104,9 +104,9 @@ require_once ('sys/gen0.php');
 <div id="pages_bottom" >
 	<div>
 		<a class="podol_n" href="/">© Cart mod. </a> |
-		<a class="podol_n" href="/app">Product</a> |
 		<a class="podol_n" href="/">Store</a> |
-		<a class="podol_n" href="/cart">Cart</a>
+		<a class="podol_n" href="/cart">Cart</a> |
+		<a class="podol_n" href="/favorite">Favorite</a>
 	</div>
 </div>
 </body>

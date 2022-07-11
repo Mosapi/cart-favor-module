@@ -15,13 +15,10 @@ require_once ('sys/gen0.php');
 <div class="mess">
 	<div id='header2'>
 		<div class='_kji_ lef'>
-			<div class=''><a></a></div>
+			<div class=''><a>My Favorite</a></div>
 		</div>
 		<div class='_kji_ rih'>
 			<div class='_flx'>
-				<div class='c_mod'>
-					<a><button id='incart' class='' >Clear cart</button></a>
-				</div>
 			</div>
 		</div>
 	</div>
@@ -31,18 +28,19 @@ require_once ('sys/gen0.php');
 		<div style='padding:10px;flex-direction:row;justify-content:flex-start;flex-wrap:wrap;display:flex;'>
 		<?
 		$uid = '1';//$_SESSION['user_id'];
-		$kamek = mysqli_query($link, "SELECT 1 FROM `ga_tempcart` Where uid='{$uid}'");
+		$kamek = mysqli_query($link, "SELECT 1 FROM `ga_userfav` Where idusers='{$uid}'");
 		$t_kamek = mysqli_num_rows($kamek);
 		if($t_kamek != 0){
-		$gameg = mysqli_query($link, "SELECT gmurls FROM `ga_tempcart` Where uid='{$uid}'");
+		$gameg = mysqli_query($link, "SELECT idgames FROM `ga_userfav` Where idusers='{$uid}'");
 		$full_tp = 0;
 		$f_gameg = mysqli_fetch_array($gameg);
-		$t_name = $f_gameg['gmurls']; //массив игр
+		$t_name = $f_gameg['idgames']; //массив игр
 		$g_name = explode(",", $t_name);;
 		//echo $g_name;
 		for($i=0; $i<count($g_name); $i++){
 			$produkt = $g_name[$i];
-			$inf_pr = mysqli_query($link, "SELECT * FROM `ga_products` Where gurl='{$produkt}'");
+			if($produkt != '' || $produkt != null){
+				$inf_pr = mysqli_query($link, "SELECT * FROM `ga_products` Where gurl='{$produkt}'");
 			$fs_game = mysqli_fetch_array($inf_pr);
 			$fs_name = $fs_game['name'];
 			$fs_url = $fs_game['gurl'];
@@ -81,31 +79,22 @@ require_once ('sys/gen0.php');
 					</div>
 				</div>
 			";
+			}
 		}
 		}else{
-			echo "Корзина пуста";
+			echo "Favorite is empty !";
 			
 		}
 		?>
 		</div>
 	</div>
 </div>
-<div id='header2' style='display:flex;justify-content:flex-end;'>
+<div id='header2'>
 	<div class='_kji_ '>
 			<div class=''><a></a></div>
 		</div>
 		<div class='_kji_ '>
 			<div class='_flx'>
-				<div class='c_mod'>
-					<a><span id='pricef' class='' >
-					<?
-					$full_pipi = $full_tp; //
-					echo $full_pipi.'Руб.  '; 
-					?></span></a>
-				</div>
-				<div class='c_mod'>
-					<a><button id='incart' class='' >Confirm</button></a>
-				</div>
 			</div>
 		</div>
 </div>

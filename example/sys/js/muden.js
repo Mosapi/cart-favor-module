@@ -6,6 +6,7 @@ cr_iom = 0; //if 0 - статический контент, нельзя дро�
 cr_unco = 1; //if 0 - необходимо доводить непременно до корзины, чтобы засчитало добавление, // 1 - вверх от тек. координат - в корзину, вправо или лево - в фаворит ПОКА НЕТ!!!!!!.
 cr_wind = 1; //if 0 - не будет окна при клике по корзине, а сразу переход. 1 - будет всплывающее окно
 cr_timek = 5000; //таймер обновления анимации корзины
+vikt = 0;
 cr_blck = '#rec_mod'; //блок под корзину
 cr_vall = '#cart_val'; //блок под корзину
 cr_to4k = '#cr_pod'; //маркер для корзины 2
@@ -78,13 +79,72 @@ function preload_car(){//загрузка состояния корзины пр
 	var opt = ['load_cart', userid];
 	dataSet(opt);
 }
-function car_watch(){//отображение на экране содержимого корзины
+function car_watch(){//отображение на экране содержимого корзины ?????????????
 	if(cr_wind == 0){ //если 0 то не будет всплывающего окна
 		window.location.href = cr_url;
 	}else{
 		//setInterval(() => anim_car(), 800);
 		vikt = 3;
 		console.log('Нажали на корзину');
+		monstr = document.querySelector("#cart_cont");
+		if(monstr){}else{
+			constr = document.querySelector("#cart_val"); //находим поле значения корзины
+			constr2 = constr.parentElement;//.parentElement; //находим родителя корзины
+			constr2.insertAdjacentHTML("beforeend","<div style='position:absolute;padding:5px;right:0px;z-index:99;margin-top: -5px;'><div id='cart_cont' style='width:380px;border-radius:6px;background-color:rgb(255 255 255 / 91%);box-shadow:0 0 3px #444;padding:10px;'></div></div>");
+			castr = document.querySelector("#cart_cont");
+			if(cr_cab.length<=0){//проверить знаки
+				castr.innerHTML = "<div style='padding:40px;position:relative;z-index:10;text-align:center;color:gray;background:#fff;height:100px;'><div style='font-size:16px;color:#b400ff;font-weight:600;padding:10px 0px;border-bottom:1px solid #dfdfdf;'>Корзина пуста</div><div style='font-size:12px;text-transform:none;padding:10px 0px;'>Исcледуйте лучшие продукты и предложения</div><div><a href='/'><button id='incler'>Исследовать</button></a></div></div>";
+			}else{
+				//надо пересмотреть форму корзины.
+				//разбираем cr_cab
+				castr.innerHTML = "<div><div id='layer' style='position:absolute;width:380px;height:226px;z-index:35;background-color: #ffffffe0;border-radius:6px;border:none;'></div><div><span>Cart</span></div></div><div><div id='gam_incart' style='display:none;position:relative;flex-wrap:wrap;overflow-y:auto;max-height:170px;'></div></div><div style='display:flex;margin-top:20px;'><div><button id='incart'>In Cart</button></div><div><button id='inkler'>Clear</button></div></div></div>";
+				jonst = document.querySelector("#gam_incart");//
+				layert = document.querySelector("#layer");//
+				console.log(cr_cab);
+				skil = 0;
+				for (l=0; l<cr_cab.length;l++){
+					var mint = cr_cab[l]; //сокращение игры
+					var opt = ['load_info', mint];
+					dataSet(opt);
+					skil ++;
+					//перенесено определение игр в запрос фетч
+				}
+				//нужно отобразить загрузку пока идет выборка игр
+				if(skil != cr_cab.length){
+					console.log('loading ...');
+					layert.innerHTML = 'Идет Загрузка';
+				}else{
+					/*setTimeout(function buildfc(){*/
+						console.log('finaly !');
+						jonst.style.display = 'flex';
+					/*}, 5000);*/
+				}
+				
+			}
+			fbut = document.querySelector("#incart"), fbut2 = document.querySelector("#inkler");
+			constr2.addEventListener('mouseleave', function(){
+				//castr.parentElement.remove(); //автоскрытие корзины, в конце раскоментить. НЕ УДАЛЯТЬ!!
+			});
+			if(fbut){
+				fbut.addEventListener('click', function(){
+					window.location.href = cr_url;
+				});
+			}
+			if(fbut2){
+				fbut2.addEventListener('click', function(){
+					var opt = ['del_incart'];
+					delete cr_cab;//очищаем память
+					//jonst.remove();
+					castr.innerHTML = "<div style='padding:40px;position:relative;z-index:10;text-align:center;color:gray;background:#fff;height:100px;'><div style='font-size:16px;color:#b400ff;font-weight:600;padding:10px 0px;border-bottom:1px solid #dfdfdf;'>Корзина пуста</div><div style='font-size:12px;text-transform:none;padding:10px 0px;'>Исcледуйте лучшие продукты и предложения</div><div><a href='/'><button id='inkler'>Исследовать</button></a></div></div>";
+					//обновить визуал корзины
+					cabin.innerHTML = '';
+					cabin2.innerHTML = '';
+					to4k.style.display = 'none';
+					dataSet(opt);
+					console.log(cr_cab);
+				});
+			}
+		}
 	}
 }
 function add_cab(){//добавление продукта в корзину
@@ -130,25 +190,22 @@ function add_fab(){//Добавление в любимое
 		//режим поворота
 		farimg.style.transform = "scaleX(-1)";//разворот на обратную сторону
 		pin = farimg.querySelector('img');
-		console.log(pin);
+		//console.log(pin);
 		pin.setAttribute('src', '/content/ico/aplus.png'); //заменяем картинку на +1
 		setTimeout(function stock(){
 			farimg.style.transform = null; //разворот обратно
 			pin.setAttribute('src', '/content/ico/fav.png');//смена обратно картинки
 		}, 2000);
 	}
-	/*
-	if(cr_know == ''){
-		cr_know = acab.getAttribute("game");console.log(cr_know + ' -2'); //что здесь делается ?????
-	}else{
-		//console.log(cr_know);
-	}*/
-	//var opt = ['add_infavt', cr_know];
-	//dataSet(opt);
-	
-
-	//console.log(cr_know);
+	console.log(cr_know);
 	//отправка в бд фавор продукта
+	/*
+	cr_cab.push(cr_know);
+			console.log(cr_cab);
+			cabin.innerHTML = tik;
+	*/
+		var opt = ['add_infav', cr_know];
+		dataSet(opt);
 }
 function img_dop(el, e){//добавление меню продукту при наведении
 	var jok = el; // element
@@ -157,6 +214,9 @@ function img_dop(el, e){//добавление меню продукту при 
 	pint = domn.querySelector("#img_dop");//проверка на существование блока
 	cr_know = jok.getAttribute("game");
 	if(pint){} else{
+		/*
+		нужна проверка, если продукт уже куплен, то вместо добавления в корзину, тупо переход в библиотеку.
+		*/
 		domn.insertAdjacentHTML("afterbegin","<div id='img_dop' style='width: 150px;height: 240px;position:absolute;background-color:rgb(48 48 47 / 64%);border-radius:6px;'><div style='display:flex;margin:100px 10px;'><div style='width:40px;height:40px;background-color:#1f1e1e;border-radius:6px;box-shadow:0 0 2px #050505;margin:2px;cursor:pointer;'><a href='/app/"+cr_know+"'><img style='width:30px;height:30px;padding:5px;' src='content/ico/page.png'></a></div><div id='adcabs' style='width:40px;height:40px;background-color:#db1919;border-radius:6px;box-shadow:0 0 2px #050505;margin:2px;cursor:pointer;'><img style='width:30px;height:30px;padding:5px;' src='content/ico/cart.png'></div><div id='fasori' style='width:40px;height:40px;background-color:#d87d0c;border-radius: 6px;box-shadow:0 0 2px #050505;margin:2px;cursor:pointer;'><img style='width:30px;height:30px;padding:5px;' src='content/ico/fav.png'></div></div></div>");
 	}
 	scab = document.querySelector('#adcabs');
@@ -226,8 +286,6 @@ function anim_car(){ //анимации корзинки
 	}
 	if(g == 0 && vikt == 3){
 		chang = carimg.querySelector('img');
-		//console.log(chang);
-		console.log('do');
 		chang.setAttribute('src', '/content/moad.gif');//cr_load
 		/*
 		setTimeout(function teck(){chang.style.transform = "rotate(0deg)";}, 0);
@@ -240,7 +298,6 @@ function anim_car(){ //анимации корзинки
 		setTimeout(function teck(){chang.style.transform = "rotate(315deg)";}, 700);
 		setTimeout(function teck(){chang.style.transform = "rotate(360deg)";}, 800);
 		*/
-		//лучше gif найти
 	}
 }
 function dataSet(opt){//взаимодействие с обработчиком php, работа с базой
