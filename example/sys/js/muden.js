@@ -24,13 +24,13 @@ recycler = new function(){
 	if(cr_mod == 1){//значит цветной режим кубиков
 		if(rec_r){
 			//если существует поле для вставки
-			rec_r.innerHTML = "<div class='_flx'><div class='c_mod'><a><span id='down' class='mf_t _b'><img src='content/ico/down.png'></span></a></div><div class='c_mod'><a><span id='cart' class='mf_t _r'><img src='content/ico/cart.png'></span></a><div id='cart_val'></div></div><div class='c_mod'><a href='#favorite'><span id='favor' class='mf_t _s'><img src='content/ico/fav.png'></span></a></div></div>";
+			rec_r.innerHTML = "<div class='_flx'><div class='c_mod'><a><span id='down' class='mf_t _b'><img src='/content/ico/down.png'></span></a></div><div class='c_mod'><a><span id='cart' class='mf_t _r'><img src='/content/ico/cart.png'></span></a><div id='cart_val'></div></div><div class='c_mod'><a href='#favorite'><span id='favor' class='mf_t _s'><img src='/content/ico/fav.png'></span></a></div></div>";
 		}
 	}else if(cr_mod == 2){
 		//черные иконки
 		if(rec_r){
 			//если существует поле для вставки
-			rec_r.innerHTML = "<div class='_flx'><div class='c_mod'><a><span id='down' class='mf_t'><img src='content/ico/down2.png'></span></a></div><div class='c_mod'><div><a><span class='mf_t'><img id='cart2' src='content/ico/cart2.png'></span></a></div><div style='display:flex;position:absolute;margin:-16px 10px;'><div style='height:15px;width:15px;'><div id='cr_pod' style='display:none;height:15px;width:15px;background-color:#cf0de7;border-radius:9px;box-shadow:0 0 2px #000;'></div></div><div id='cart_val2' style='margin-left:14px;'></div></div></div><div class='c_mod'><a href='#favorite'><span class='mf_t'><img id='favor' src='content/ico/fav2.png'></span></a></div></div>";
+			rec_r.innerHTML = "<div class='_flx'><div class='c_mod'><a><span id='down' class='mf_t'><img src='/content/ico/down2.png'></span></a></div><div class='c_mod'><div><a><span class='mf_t'><img id='cart2' src='/content/ico/cart2.png'></span></a></div><div style='display:flex;position:absolute;margin:-16px 10px;'><div style='height:15px;width:15px;'><div id='cr_pod' style='display:none;height:15px;width:15px;background-color:#cf0de7;border-radius:9px;box-shadow:0 0 2px #000;'></div></div><div id='cart_val2' style='margin-left:14px;'></div></div></div><div class='c_mod'><a href='#favorite'><span class='mf_t'><img id='favor' src='/content/ico/fav2.png'></span></a></div></div>";
 		}
 	}
 }

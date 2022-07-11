@@ -75,7 +75,7 @@ require_once ('sys/gen0.php');
 		<a class="podol_n" href="/">© Cart mod. </a> |
 		<a class="podol_n" href="/app">Product</a> |
 		<a class="podol_n" href="/">Store</a> |
-		<a class="podol_n" href="cart.php">Cart</a>
+		<a class="podol_n" href="/cart">Cart</a>
 	</div>
 </div>
 </body>
